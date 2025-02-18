@@ -64,23 +64,52 @@ def predict():
 @app.route('/batch-predict', methods=['POST'])
 def batch_predict():
     try:
-        data = request.json  # Get data from request
+        data = request.get_json(force=True)  # Ensure JSON parsing
         df = pd.DataFrame(data)
 
-        # Ensure correct feature order
-        for feature in feature_names:
-            if feature not in df.columns:
-                df[feature] = 0  # Fill missing features with default value
+        # 🛠 Ensure only required columns are used (ignores extra columns)
+        input_columns = df.columns.tolist()
+        input_df = df[input_columns]  # Keep only provided columns
+        
+        # 🛠 Add missing features efficiently
+        missing_features = list(set(feature_names) - set(input_df.columns))
+        if missing_features:
+            missing_df = pd.DataFrame(0, index=input_df.index, columns=missing_features)
+            input_df = pd.concat([input_df, missing_df], axis=1)
 
-        df = df[feature_names]  # Ensure column order
-        predictions = model.predict(df)
+        # 🛠 Ensure correct feature order before prediction
+        input_df = input_df[feature_names]
 
-        df['prediction'] = predictions.tolist()  # Add predictions column
+        # 🔹 Identify Year & Month Columns (Modify these based on your dataset)
+        year_month_columns = [
+            "Start Date_Year", "Start Date_Month",
+            "Completion Date_Year", "Completion Date_Month"
+        ]
 
-        return jsonify({"predictions": df.to_dict(orient="records")})
+        # 🛠 Convert Year & Month Columns to int
+        for col in year_month_columns:
+            if col in input_df.columns:
+                input_df[col] = input_df[col].fillna(0).astype('int32')  # Avoid NaN issues
+
+        # 🛠 Convert other numeric columns to float
+        input_df = input_df.astype({col: 'float32' for col in input_df.columns if col not in year_month_columns})
+
+        # 🛠 Make Predictions
+        predictions = model.predict(input_df)
+
+        # 🛠 Add predictions column to output
+        df["prediction"] = predictions.tolist()
+
+        # 🛠 Return only original input columns + prediction
+        response_df = df[input_columns + ["prediction"]]
+
+        return jsonify({"predictions": response_df.to_dict(orient="records")})
 
     except Exception as e:
+        logging.error(f"Batch prediction error: {e}")
         return jsonify({"error": str(e)}), 400
+
+
 
 
 if __name__ == '__main__':

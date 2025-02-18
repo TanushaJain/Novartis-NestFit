@@ -7,5 +7,4 @@ body {
     background-repeat: no-repeat; /* Prevents the image from repeating */
     background-attachment: fixed;
     background-size: cover;
-    overflow: hidden;
 }
