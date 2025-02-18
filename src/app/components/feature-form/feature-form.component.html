@@ -1,0 +1,99 @@
+<div class="container">
+  <!-- <h2>LightGBM Feature Input Form</h2> -->
+
+  <form [formGroup]="featureForm" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+      <!-- LEFT COLUMN -->
+      <div class="form-column">
+        <mat-form-field appearance="outline">
+          <mat-label>Enrollment</mat-label>
+          <input matInput type="number" formControlName="enrollment" >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Study Duration</mat-label>
+          <input matInput type="number" formControlName="studyDuration" >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date Year</mat-label>
+          <input matInput type="number" formControlName="startDateYear" >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date Month</mat-label>
+          <input matInput type="number" formControlName="startDateMonth" >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Completion Date Year</mat-label>
+          <input matInput type="number" formControlName="completionDateYear" >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Completion Date Month</mat-label>
+          <input matInput type="number" formControlName="completionDateMonth" >
+        </mat-form-field>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="form-column">
+        <mat-form-field appearance="outline">
+          <mat-label>Enrollment Missing</mat-label>
+          <mat-select formControlName="enrollmentMissing" >
+            <mat-option value="yes">Yes</mat-option>
+            <mat-option value="no">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Enrollment Scaled</mat-label>
+          <input matInput type="number" formControlName="enrollmentScaled" >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Sex</mat-label>
+          <mat-select formControlName="sex" >
+            <mat-option value="all">All</mat-option>
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Healthy Volunteers</mat-label>
+          <mat-select formControlName="healthyVolunteers" >
+            <mat-option value="yes">Yes</mat-option>
+            <mat-option value="no">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Study Type</mat-label>
+          <mat-select formControlName="studyType" >
+            <mat-option value="interventional">Interventional</mat-option>
+            <mat-option value="observational">Observational</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Funder Type</mat-label>
+          <mat-select formControlName="funderType" >
+            <mat-option value="industry">Industry</mat-option>
+            <mat-option value="government">Government</mat-option>
+            <mat-option value="other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="featureForm.invalid">Submit</button>
+  </form>
+
+  <!-- Prediction Result -->
+  <div *ngIf="predictionResult !== null && predictionResult !== undefined">
+    <h3>Prediction Result:</h3>
+    <p>{{ predictionResult }}</p>
+  </div>
+</div>

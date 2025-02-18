@@ -1,0 +1,31 @@
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
+  background: #f4f4f4;
+  border-radius: 10px;
+}
+
+/* Create a 2-column grid layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 30px;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px; 
+  font-size: 16px;
+}
