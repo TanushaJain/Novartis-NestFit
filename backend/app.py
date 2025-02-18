@@ -54,7 +54,6 @@ def predict():
 
         # Make prediction
         prediction = model.predict(input_df)
-        print(prediction)
 
         return jsonify({"prediction": int(prediction[0])})
     
