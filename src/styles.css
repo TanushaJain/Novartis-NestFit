@@ -2,3 +2,10 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+    background-image: url('E:/NEST/feature-form-app/backend/background.png');
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed;
+    background-size: cover;
+    overflow: hidden;
+}

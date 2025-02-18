@@ -3,7 +3,7 @@
 
   <form [formGroup]="featureForm" (ngSubmit)="onSubmit()">
     <div class="form-grid">
-      <!-- LEFT COLUMN -->
+      <!-- FIRST COLUMN -->
       <div class="form-column">
         <mat-form-field appearance="outline">
           <mat-label>Enrollment</mat-label>
@@ -24,7 +24,10 @@
           <mat-label>Start Date Month</mat-label>
           <input matInput type="number" formControlName="startDateMonth" >
         </mat-form-field>
+      </div>
 
+      <!-- SECOND COLUMN -->
+      <div class="form-column">
         <mat-form-field appearance="outline">
           <mat-label>Completion Date Year</mat-label>
           <input matInput type="number" formControlName="completionDateYear" >
@@ -34,10 +37,7 @@
           <mat-label>Completion Date Month</mat-label>
           <input matInput type="number" formControlName="completionDateMonth" >
         </mat-form-field>
-      </div>
 
-      <!-- RIGHT COLUMN -->
-      <div class="form-column">
         <mat-form-field appearance="outline">
           <mat-label>Enrollment Missing</mat-label>
           <mat-select formControlName="enrollmentMissing" >
@@ -50,7 +50,10 @@
           <mat-label>Enrollment Scaled</mat-label>
           <input matInput type="number" formControlName="enrollmentScaled" >
         </mat-form-field>
+      </div>
 
+      <!-- THIRD COLUMN -->
+      <div class="form-column">
         <mat-form-field appearance="outline">
           <mat-label>Sex</mat-label>
           <mat-select formControlName="sex" >
@@ -97,3 +100,4 @@
     <p>{{ predictionResult }}</p>
   </div>
 </div>
+
