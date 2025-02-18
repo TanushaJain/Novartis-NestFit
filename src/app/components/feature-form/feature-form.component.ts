@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Modal } from 'bootstrap';  // Import Bootstrap modal class
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 @Component({
   selector: 'app-feature-form',
@@ -25,20 +27,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class FeatureFormComponent {
   featureForm: FormGroup;
   predictionResult: string | null = null;
-
-  featureOrder = [
-    "Enrollment", "Study Duration", "Start Date_Year", "Start Date_Month",
-    "Completion Date_Year", "Completion Date_Month", "Enrollment_missing",
-    "Enrollment_Scaled", "Sex_ALL", "Sex_FEMALE", "Sex_MALE", "Age_ADULT",
-    "Age_ADULT_ OLDER_ADULT", "Age_CHILD", "Age_CHILD_ ADULT", "Age_OLDER_ADULT",
-    "StudyType_INTERVENTIONAL", "StudyType_OBSERVATIONAL", "FunderType_INDIV",
-    "FunderType_INDUSTRY", "FunderType_NIH", "FunderType_OTHER", "reason_Adverse Event",
-    "reason_Death", "reason_Lost to Follow_up", "reason_Others", "reason_Physician Decision",
-    "reason_Withdrawal by Subject", "minimum_age", "maximum_age", "healthy_volunteers",
-    "is_age_limited", "criteria_length", "inclusion_criteria_count", "exclusion_criteria_count",
-    "event_count", "frequency_threshold", "subject_impact_ratio", "ctgov_group_code_encoded",
-    "organ_system_encoded", "adverse_event_term_encoded"
-  ];
+  showModal: boolean = false;  // Control modal visibility
+  modal: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.featureForm = this.fb.group({
@@ -59,7 +49,7 @@ export class FeatureFormComponent {
 
   onSubmit() {
     const formData = this.featureForm.value;
-  
+
     let formattedData: any = {
       "Enrollment": formData.enrollment ? Number(formData.enrollment) : 0,
       "Study Duration": formData.studyDuration ? Number(formData.studyDuration) : 0,
@@ -80,21 +70,38 @@ export class FeatureFormComponent {
       "FunderType_OTHER": formData.funderType === "other" ? 1 : 0,
       "healthy_volunteers": formData.healthyVolunteers === "yes" ? 1 : 0,
     };
-  
-  
-    this.http.post<{ prediction: number }>('http://127.0.0.1:5000/predict', formattedData)
-  .subscribe(response => {
-    if (response.prediction === 1) {
-      this.predictionResult = "The study is expected to be completed.";
-    } else {
-      this.predictionResult = "The study is not expected to be completed.";
-    }
-  }, error => {
-    console.error("Prediction failed:", error);
-    this.predictionResult = "Error in prediction!";
-  });
 
+    this.http.post<{ prediction: number }>('http://127.0.0.1:5000/predict', formattedData)
+      .subscribe(response => {
+        if (response.prediction === 1) {
+          this.predictionResult = "The study is expected to be completed.";
+        } else {
+          this.predictionResult = "The study is not expected to be completed.";
+        }
+        const modalElement = document.getElementById('resultModal');
+  this.modal = new Modal(modalElement!);
+        this.modal.show();  // Show the modal
+      }, error => {
+        console.error("Prediction failed:", error);
+        this.predictionResult = "Error in prediction!";
+        
+        // Open the modal on error
+        const modalElement = document.getElementById('resultModal');
+        this.modal= new Modal(modalElement!); // Create a new modal instance
+        this.modal.show();  // Show the modal
+      });
   }
-  
+
+  // Set the background color of the modal based on the prediction result
+  getModalBackgroundColor() {
+    if (this.predictionResult === "The study is expected to be completed.") {
+      return 'rgb(0, 128, 0,0.6)';
+    } else if (this.predictionResult === "The study is not expected to be completed.") {
+      return 'rgba(255, 0, 0, 0.6)';
+    } else {
+      return 'lightgray';  // Default color'rgba(255, 0, 0, 0.6)'
+    }
+  }
+
   
 }

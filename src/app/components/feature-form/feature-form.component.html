@@ -94,10 +94,17 @@
     <button mat-raised-button color="primary" type="submit" [disabled]="featureForm.invalid">Submit</button>
   </form>
 
-  <!-- Prediction Result -->
-  <div *ngIf="predictionResult !== null && predictionResult !== undefined">
-    <h3>Prediction Result:</h3>
-    <p>{{ predictionResult }}</p>
+  <!-- Modal -->
+  <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" [ngStyle]="{'background-color': getModalBackgroundColor(),'color':'white'}">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resultModalLabel">Prediction Result</h5>
+        </div>
+        <div class="modal-body">
+          <h3>{{ predictionResult }}</h3>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
