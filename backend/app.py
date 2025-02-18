@@ -60,5 +60,28 @@ def predict():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+
+@app.route('/batch-predict', methods=['POST'])
+def batch_predict():
+    try:
+        data = request.json  # Get data from request
+        df = pd.DataFrame(data)
+
+        # Ensure correct feature order
+        for feature in feature_names:
+            if feature not in df.columns:
+                df[feature] = 0  # Fill missing features with default value
+
+        df = df[feature_names]  # Ensure column order
+        predictions = model.predict(df)
+
+        df['prediction'] = predictions.tolist()  # Add predictions column
+
+        return jsonify({"predictions": df.to_dict(orient="records")})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
 if __name__ == '__main__':
     app.run(debug=True)

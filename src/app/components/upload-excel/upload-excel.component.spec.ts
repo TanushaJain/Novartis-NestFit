@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalComponent } from './modal.component';
+import { UploadExcelComponent } from './upload-excel.component';
 
-describe('ModalComponent', () => {
-  let component: ModalComponent;
-  let fixture: ComponentFixture<ModalComponent>;
+describe('UploadExcelComponent', () => {
+  let component: UploadExcelComponent;
+  let fixture: ComponentFixture<UploadExcelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalComponent]
+      imports: [UploadExcelComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ModalComponent);
+    fixture = TestBed.createComponent(UploadExcelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

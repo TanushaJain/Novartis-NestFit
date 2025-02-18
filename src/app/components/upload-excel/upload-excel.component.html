@@ -1,0 +1,48 @@
+<div class="container">
+    <h2>Upload Excel & Predict</h2>
+  
+    <!-- File Upload Input -->
+    <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls">
+    <p *ngIf="fileName">Uploaded File: <strong>{{ fileName }}</strong></p>
+  
+    <!-- Display Uploaded Data -->
+    <div *ngIf="uploadedData.length > 0">
+      <h3>Uploaded Data</h3>
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let key of getKeys(uploadedData[0])">{{ key }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of uploadedData">
+            <td *ngFor="let key of getKeys(row)">{{ row[key] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Predict Button -->
+    <button (click)="predict()" [disabled]="uploadedData.length === 0">Predict</button>
+  
+    <!-- Display Predictions -->
+    <div *ngIf="predictedResults.length > 0">
+      <h3>Predicted Results</h3>
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let key of getKeys(predictedResults[0])">{{ key }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of predictedResults">
+            <td *ngFor="let key of getKeys(row)">{{ row[key] }}</td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- Download Predictions Button -->
+      <button (click)="downloadResults()">Download Predictions</button>
+    </div>
+  </div>
+  

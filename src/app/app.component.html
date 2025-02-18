@@ -1,3 +1,24 @@
-<div>
-<app-feature-form></app-feature-form>
+<mat-toolbar color="primary">
+  <img [src]="leftLogo" alt="Left Logo" class="left-logo">
+
+  <button 
+    mat-button 
+    (click)="switchComponent('form')" 
+    [class.active]="selectedComponent === 'form'">
+    Form Input
+  </button>
+  <!-- <button 
+    mat-button 
+    (click)="switchComponent('upload')" 
+    [class.active]="selectedComponent === 'upload'">
+    Upload Excel
+  </button> -->
+
+  <img [src]="rightLogo" alt="Right Logo" class="right-logo">
+
+</mat-toolbar>
+
+<div class="content">
+  <app-feature-form *ngIf="selectedComponent === 'form'"></app-feature-form>
+  <app-upload-excel *ngIf="selectedComponent === 'upload'"></app-upload-excel>
 </div>

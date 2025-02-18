@@ -1,0 +1,31 @@
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  input {
+    margin-bottom: 10px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  

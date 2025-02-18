@@ -2,12 +2,20 @@
   max-width: 900px;
   margin: auto;
   padding: 30px;
-  background: #f4f4f4;
   border-radius: 10px;
-  margin-top: 150px;
+  margin-top: 20px;
   overflow: hidden;
 }
 
+.cont{
+  ax-width: 900px;
+  margin: auto;
+  padding: 30px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  margin-top: 25px;
+  overflow: hidden;
+}
 /* Create a 3-column grid layout */
 .form-grid {
   display: grid;
